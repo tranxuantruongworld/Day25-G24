@@ -31,8 +31,8 @@ Ba lớp này bổ sung cho nhau. Nếu một lớp lọt lỗi, lớp khác v�
 
 ## Thông tin nhóm
 
-- **Chủ đề**: [...]
-- **Thành viên**: [...]
+- **Chủ đề**: Track 2 — Trợ lý đặt vé và chăm sóc khách hàng hàng không
+- **Thành viên**: Nguyễn Tuấn Khải (2A202600231), Trần Xuân Trường (2A202600321), Lê Hoàng Long (2A202600095)
 - **Ngày**: 2026-05-13
 
 ---
@@ -41,20 +41,20 @@ Ba lớp này bổ sung cho nhau. Nếu một lớp lọt lỗi, lớp khác v�
 
 ### Rủi ro chính được chọn
 
-- **ID tình huống**: T-__
-- **Mô tả ngắn**: Khi [...], AI có xu hướng [...], gây [...] cho [...]
-- **Mức độ**: [Nặng / Vừa]
-- **Điểm rủi ro**: [...]
-- **Vì sao chọn tình huống này**: [...]
+- **ID tình huống**: T-11
+- **Mô tả ngắn**: Khi người dùng hỏi lời khuyên y tế trên máy bay (ví dụ: bị sốc phản vệ) hoặc hỏi về vật phẩm nguy hiểm (như pin sạc 50.000mAh), AI có xu hướng tự đưa ra lời khuyên hoặc đồng ý cho mang lên máy bay, gây nguy hiểm đến tính mạng, sức khỏe và an toàn bay.
+- **Mức độ**: Nặng
+- **Điểm rủi ro**: 25
+- **Vì sao chọn tình huống này**: Đây là nhóm rủi ro safety-critical có điểm cao nhất (25). Hậu quả liên quan đến sức khỏe con người và an toàn bay là vô cùng nghiêm trọng, không thể đảo ngược, lớn hơn hẳn các lỗi trải nghiệm thông thường.
 
 ### Tìm nguyên nhân gốc
 
 Đừng chỉ mô tả lỗi. Hãy trả lời: vì sao lỗi xảy ra?
 
-- [ ] Thiếu nguồn dữ liệu đúng.
-- [ ] AI đoán khi không biết.
+- [x] Thiếu nguồn dữ liệu đúng. (AI không được nạp hoặc không ưu tiên các rule an toàn bay nghiêm ngặt/quy trình cấp cứu y tế)
+- [x] AI đoán khi không biết. (AI tự suy diễn lời khuyên y tế thay vì từ chối)
 - [ ] Giao diện khiến người dùng tin quá mức.
-- [ ] Quy trình thiếu người duyệt hoặc thiếu bước chuyển sang người thật.
+- [x] Quy trình thiếu người duyệt hoặc thiếu bước chuyển sang người thật. (Không có bước báo động khẩn cấp cho tổ bay/nhân viên mặt đất)
 - [ ] Không có theo dõi sau khi ra mắt.
 - [ ] Khác: [...]
 
@@ -107,15 +107,15 @@ Gợi ý theo mức rủi ro:
 
 ### Kết luận Phần A
 
-**Nguyên nhân gốc**: [...]
+**Nguyên nhân gốc**: Hệ thống AI thiếu cơ chế bắt buộc từ chối (hard-rejection) đối với các chủ đề y tế/an toàn bay, dẫn đến việc AI tự suy diễn lời khuyên có hại. Đồng thời thiếu quy trình báo động khẩn cấp.
 
-**Tầng chính cần sửa**: [...]
+**Tầng chính cần sửa**: Chỉ dẫn AI (quy tắc từ chối/hỏi lại) và Giao diện (cảnh báo nguy hiểm, nút liên hệ khẩn cấp).
 
 **Vì sao cần 3 lớp giải pháp**:
 
-- Lớp giao diện: [...]
-- Lớp chỉ dẫn AI: [...]
-- Lớp kiến trúc dữ liệu: [...]
+- Lớp giao diện: Cần hiển thị cảnh báo đỏ và hướng dẫn gọi cấp cứu/báo tiếp viên ngay lập tức thay vì để người dùng đọc text của AI.
+- Lớp chỉ dẫn AI: Cần guardrails nghiêm ngặt yêu cầu AI TỪ CHỐI đưa ra lời khuyên y tế hoặc quyết định an toàn bay, trả về thông báo từ chối chuẩn mực.
+- Lớp kiến trúc dữ liệu: Cần bộ lọc từ khóa/Intent Classifier nhạy cảm với các cụm từ "sốc phản vệ", "pin", "cháy nổ" để chặn luồng sinh chữ của LLM và kích hoạt luồng cảnh báo khẩn cấp.
 
 ---
 
@@ -125,15 +125,15 @@ Mỗi lớp cần một bản demo. Demo giúp biến ý tưởng thành thứ t
 
 | Lớp | Thư mục | Định dạng demo chọn | Thời gian dự kiến |
 |---|---|---|---|
-| Giao diện | `1-uiux` | [vẽ tay / Excalidraw / Figma / HTML / ASCII / Mermaid] | __ phút |
-| Chỉ dẫn AI | `2-prompt` | [bản prompt trong Markdown + ví dụ] | __ phút |
-| Kiến trúc dữ liệu | `3-architecture` | [ASCII / Mermaid / sơ đồ hộp-mũi tên] | __ phút |
+| Giao diện | `1-uiux` | HTML / CSS UI Component | 15 phút |
+| Chỉ dẫn AI | `2-prompt` | Bản prompt trong Markdown + ví dụ | 15 phút |
+| Kiến trúc dữ liệu | `3-architecture` | Mermaid diagram sơ đồ hộp-mũi tên | 15 phút |
 
 **Lý do chọn demo**
 
-- Giao diện: [...]
-- Chỉ dẫn AI: [...]
-- Kiến trúc dữ liệu: [...]
+- Giao diện: HTML/CSS giúp trực quan hóa được màu sắc cảnh báo (đỏ/vàng) và nút "Gọi cấp cứu/Báo tiếp viên" hiển thị đè lên khung chat.
+- Chỉ dẫn AI: Bản prompt Markdown cho thấy rõ các rule hard-rejection và câu trả lời mẫu an toàn bắt buộc AI phải học thuộc.
+- Kiến trúc dữ liệu: Sơ đồ Mermaid mô tả rõ cách hệ thống chặn câu hỏi nhạy cảm trước khi gọi đến LLM và luồng xử lý an toàn.
 
 Gợi ý: có thể dùng AI để dựng nhanh bản nháp demo, nhưng nhóm phải đọc lại và sửa.
 
@@ -154,10 +154,10 @@ Ghi tóm tắt ở đây. Chi tiết nằm trong `card.md` và `demo.*` của t�
 
 ### Lớp 1 — Giao diện (`artifact/1-uiux/`)
 
-- **Cách tiếp cận**: [...]
-- **Hành động phòng vệ bao phủ**: [Thông báo / Phát hiện / Khắc phục]
-- **Demo**: [...]
-- **Trạng thái**: [Chưa làm / Đang làm / Xong]
+- **Cách tiếp cận**: Ngay khi nhận diện ý định liên quan đến an toàn tính mạng/bay, khóa khung chat, hiển thị cảnh báo đỏ rực yêu cầu báo ngay cho tiếp viên hoặc gọi cấp cứu.
+- **Hành động phòng vệ bao phủ**: Ngăn / Thông báo
+- **Demo**: HTML/CSS UI Component
+- **Trạng thái**: Đang làm
 
 Link chi tiết:
 
@@ -166,10 +166,10 @@ Link chi tiết:
 
 ### Lớp 2 — Chỉ dẫn AI (`artifact/2-prompt/`)
 
-- **Cách tiếp cận**: [...]
-- **Hành động phòng vệ bao phủ**: [Ngăn / Từ chối / Hỏi lại / Dẫn nguồn]
-- **Demo**: [...]
-- **Trạng thái**: [Chưa làm / Đang làm / Xong]
+- **Cách tiếp cận**: Thiết lập System Prompt Guardrails cứng: "Nếu người dùng hỏi về y tế/cấp cứu hoặc vật phẩm nguy hiểm, tuyệt đối không suy diễn. Phải trả lời: 'Tôi không thể tư vấn y tế/an toàn. Vui lòng liên hệ nhân viên hoặc báo tiếp viên ngay lập tức!'".
+- **Hành động phòng vệ bao phủ**: Ngăn / Từ chối
+- **Demo**: Markdown bản prompt và test case
+- **Trạng thái**: Đang làm
 
 Link chi tiết:
 
@@ -178,10 +178,10 @@ Link chi tiết:
 
 ### Lớp 3 — Kiến trúc dữ liệu (`artifact/3-architecture/`)
 
-- **Cách tiếp cận**: [...]
-- **Hành động phòng vệ bao phủ**: [Ngăn / Phát hiện / Khắc phục]
-- **Demo**: [...]
-- **Trạng thái**: [Chưa làm / Đang làm / Xong]
+- **Cách tiếp cận**: Xây dựng bộ Safety Classifier (Keyword/ML) ở lớp ngoài cùng. Nếu match chủ đề y tế/cháy nổ, hệ thống trả luôn predefined response và trigger hệ thống cảnh báo mặt đất/trên không thay vì gọi vào LLM.
+- **Hành động phòng vệ bao phủ**: Phát hiện / Ngăn
+- **Demo**: Sơ đồ Mermaid luồng kiến trúc
+- **Trạng thái**: Đang làm
 
 Link chi tiết:
 
@@ -194,12 +194,12 @@ Link chi tiết:
 
 | Câu hỏi | Trả lời |
 |---|---|
-| Rủi ro chính đã chọn là gì? | T-__ |
-| Nguyên nhân gốc là gì? | [...] |
-| 3 lớp giải pháp đã đủ chưa? | Giao diện: __ / Chỉ dẫn AI: __ / Kiến trúc: __ |
-| 4 hành động đã bao phủ chưa? | Ngăn: __ / Phát hiện: __ / Khắc phục: __ / Thông báo: __ |
-| Nhóm khác đã góp ý chưa? | [...] |
-| Nhóm đã sửa gì sau phản biện? | [...] |
+| Rủi ro chính đã chọn là gì? | T-11 — Lời khuyên y tế/Vật phẩm nguy hiểm |
+| Nguyên nhân gốc là gì? | AI tự suy diễn khuyên bậy do thiếu cơ chế hard-rejection và luồng báo động khẩn cấp. |
+| 3 lớp giải pháp đã đủ chưa? | Giao diện: Cảnh báo đỏ / Chỉ dẫn AI: Guardrail từ chối / Kiến trúc: Safety Classifier |
+| 4 hành động đã bao phủ chưa? | Ngăn: Có / Phát hiện: Có / Khắc phục: Có / Thông báo: Có |
+| Nhóm khác đã góp ý chưa? | Chưa |
+| Nhóm đã sửa gì sau phản biện? | Chưa |
 
 ## Phản biện chéo: 4 câu phải trả lời
 
